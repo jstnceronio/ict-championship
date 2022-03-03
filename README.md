@@ -1,1 +1,1 @@
-"# ict-championship" 
+# ict-championship

@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -49,6 +50,8 @@ public class OverviewController implements Initializable {
 
     private User loggedInUser;
     private Car selectedCar = null;
+    private ObservableList<Car> previousReservations;
+    private Stage stage;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -108,7 +111,7 @@ public class OverviewController implements Initializable {
         Date in = new Date();
         LocalDateTime ldt = LocalDateTime.ofInstant(in.toInstant(), ZoneId.systemDefault()).minusDays(30);
         Date out = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
-        ObservableList<Car> previousReservations = DBUtils.getCarList().stream()
+        previousReservations = DBUtils.getCarList().stream()
                 .filter(c -> c.isRented())
                 .filter(c -> c.getDropOffDate().after(out))
                 .filter(c -> c.getDropOffDate().before(in))
@@ -143,7 +146,7 @@ public class OverviewController implements Initializable {
         System.out.println("Set date: " + dropOffDate);
 
         // set user
-        selectedCar.setUserFk(loggedInUser.getUserId());
+        selectedCar.setUserFk(loggedInUser);
 
         // change rent status in db
         DBUtils.rentCar(selectedCar, loggedInUser);
@@ -188,13 +191,31 @@ public class OverviewController implements Initializable {
         showPopularCars();
     }
 
-    // FIXME: fix dual filter
-
-    public void onLocationChange(ActionEvent actionEvent) {
+    public void onLocationChange() {
         showCars(cbLocation.getSelectionModel().getSelectedItem(), null);
     }
 
-    public void onCategoryChange(ActionEvent actionEvent) {
+    public void onCategoryChange() {
         showCars(null, cbCategory.getSelectionModel().getSelectedItem());
+    }
+
+    public void closeWindow() {
+        stage.close();
+    }
+
+    public void showAbout() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("About");
+        alert.setHeaderText(null);
+        alert.setContentText("This is a car rental tool :)");
+        alert.showAndWait();
+    }
+
+    public void exportData() {
+        Exporter.exportToFile(stage, previousReservations);
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }

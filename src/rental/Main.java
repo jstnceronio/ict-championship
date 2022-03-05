@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,10 +18,13 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         stg = primaryStage;
+        stg.setHeight(500);
+        stg.getIcons().add(new Image("resources/logo.png"));
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-        primaryStage.setTitle("Login");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
+        stg.setTitle("Login");
+        stg.setScene(new Scene(root));
+        stg.getScene().getStylesheets().add(getClass().getResource("/resources/application.css").toExternalForm());
+        stg.show();
     }
 
     public void changeScene(String fxml) throws IOException {
@@ -34,7 +38,7 @@ public class Main extends Application {
 
         OverviewController overviewController = loader.getController();
         overviewController.setLoggedInUser(loggedInUser);
-        stg.setTitle("Overview");
+        overviewController.setStage(stg);
         stg.getScene().setRoot(pane);
     }
 

@@ -3,6 +3,7 @@ package rental;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -24,12 +25,18 @@ public class RegistrationController implements Initializable {
     public TextField txtPasswordConfirm;
     public Button btnRegister;
     public Button btnCancel;
+    public Label lblError;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 
     public void register(ActionEvent actionEvent) throws IOException {
+        // form validation
+        if (!areFieldsValid()) {
+            return;
+        }
+
         // check if pws correlate
         if (txtPassword.getText().equals(txtPasswordConfirm.getText())) {
             User userToRegister = new User(
@@ -40,8 +47,28 @@ public class RegistrationController implements Initializable {
             DBUtils.registerUser(userToRegister);
             cancel(actionEvent);
         } else {
-            System.out.println("Passwords don't match");
+            lblError.setText("Passwords don't match!");
         }
+    }
+
+    private boolean areFieldsValid() {
+        if (txtFirstName.getText().isEmpty()) {
+            lblError.setText("First name can't be empty");
+            return false;
+        }
+        if (txtMail.getText().isEmpty()) {
+            lblError.setText("Email can't be empty");
+            return false;
+        }
+        if (txtPassword.getText().isEmpty()) {
+            lblError.setText("Password can't be empty");
+            return false;
+        }
+        if (txtPasswordConfirm.getText().isEmpty()) {
+            lblError.setText("Password can't be empty");
+            return false;
+        }
+        return true;
     }
 
     public void cancel(ActionEvent actionEvent) throws IOException {

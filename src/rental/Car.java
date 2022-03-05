@@ -10,11 +10,11 @@ public class Car {
     private Location locationFk;
     private Category categoryFk;
     private boolean isRented;
-    private int userFk;
+    private User userFk;
     private Date pickUpDate;
     private Date dropOffDate;
 
-    public Car(int carId, String description, String year, Location locationFk, Category categoryFk, boolean isRented, Date pickUpDate, Date dropOffDate) {
+    public Car(int carId, String description, String year, Location locationFk, Category categoryFk, boolean isRented, Date pickUpDate, Date dropOffDate, User userFk) {
         this.carId = carId;
         this.description = description;
         this.year = year;
@@ -23,6 +23,7 @@ public class Car {
         this.isRented = isRented;
         this.pickUpDate = pickUpDate;
         this.dropOffDate = dropOffDate;
+        this.userFk = userFk;
     }
 
     public int getCarId() {
@@ -73,11 +74,11 @@ public class Car {
         isRented = rented;
     }
 
-    public int getUserFk() {
+    public User getUserFk() {
         return userFk;
     }
 
-    public void setUserFk(int userFk) {
+    public void setUserFk(User userFk) {
         this.userFk = userFk;
     }
 

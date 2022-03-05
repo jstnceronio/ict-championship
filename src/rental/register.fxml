@@ -7,7 +7,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rental.RegistrationController">
     <children>
-        <Label layoutX="42.0" layoutY="14.0" prefHeight="25.0" prefWidth="88.0" text="First name" />
+        <Label layoutX="42.0" layoutY="14.0" prefHeight="25.0" prefWidth="88.0" text="First name *" />
         <Label layoutX="42.0" layoutY="47.0" prefHeight="25.0" prefWidth="88.0" text="Last name" />
         <TextField fx:id="txtFirstName" layoutX="130.0" layoutY="14.0" prefHeight="25.0" prefWidth="239.0" promptText="Enter Name" />
         <TextField fx:id="txtLastName" layoutX="130.0" layoutY="47.0" prefHeight="25.0" prefWidth="239.0" promptText="Enter Name" />
@@ -19,15 +19,16 @@
       <TextField fx:id="txtCity" layoutX="203.0" layoutY="163.0" prefHeight="25.0" prefWidth="166.0" promptText="City" />
       <Label layoutX="42.0" layoutY="198.0" prefHeight="25.0" prefWidth="88.0" text="Telephone" />
       <TextField fx:id="txtTelephone" layoutX="130.0" layoutY="198.0" prefHeight="25.0" prefWidth="239.0" promptText="Enter Number" />
-      <Label layoutX="42.0" layoutY="234.0" prefHeight="25.0" prefWidth="88.0" text="E-Mail" />
+      <Label layoutX="42.0" layoutY="234.0" prefHeight="25.0" prefWidth="88.0" text="E-Mail *" />
       <TextField fx:id="txtMail" layoutX="130.0" layoutY="234.0" prefHeight="25.0" prefWidth="239.0" promptText="Enter E-Mail" />
       <Label layoutX="42.0" layoutY="269.0" prefHeight="25.0" prefWidth="88.0" text="Credit card nr." />
       <TextField fx:id="txtCreditCard" layoutX="130.0" layoutY="269.0" prefHeight="25.0" prefWidth="239.0" promptText="Enter Credit card number" />
-      <Label layoutX="42.0" layoutY="301.0" prefHeight="25.0" prefWidth="88.0" text="Password" />
+      <Label layoutX="42.0" layoutY="301.0" prefHeight="25.0" prefWidth="88.0" text="Password *" />
       <TextField fx:id="txtPassword" layoutX="130.0" layoutY="301.0" prefHeight="25.0" prefWidth="239.0" promptText="Enter Password" />
-      <Label layoutX="42.0" layoutY="336.0" prefHeight="25.0" prefWidth="88.0" text="Password" />
+      <Label layoutX="42.0" layoutY="336.0" prefHeight="25.0" prefWidth="88.0" text="Password *" />
       <TextField fx:id="txtPasswordConfirm" layoutX="130.0" layoutY="336.0" prefHeight="25.0" prefWidth="239.0" promptText="Enter Password" />
-      <Button fx:id="btnRegister" layoutX="379.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Register" onAction="#register"/>
-      <Button fx:id="btnCancel" layoutX="498.0" layoutY="13.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Cancel" onAction="#cancel"/>
+      <Button fx:id="btnRegister" layoutX="379.0" layoutY="14.0" mnemonicParsing="false" onAction="#register" prefHeight="25.0" prefWidth="88.0" text="Register" />
+      <Button fx:id="btnCancel" layoutX="498.0" layoutY="13.0" mnemonicParsing="false" onAction="#cancel" prefHeight="25.0" prefWidth="88.0" text="Cancel" />
+      <Label fx:id="lblError" layoutX="379.0" layoutY="64.0" prefHeight="49.0" prefWidth="211.0" textFill="#ff7e6f" />
     </children>
 </AnchorPane>

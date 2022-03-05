@@ -59,6 +59,30 @@ public class DBUtils {
         return null;
     }
 
+    public static User getUserFromId(int id) {
+        try {
+            Connection connection = getConnection();
+            PreparedStatement psSelect = connection.prepareStatement(
+                    "SELECT * FROM users where userId = ?"
+            );
+            psSelect.setInt(1, id);
+            ResultSet rs = psSelect.executeQuery();
+
+            if (rs.next()) {
+                User existingUser = new User(
+                        rs.getInt("userId"),
+                        rs.getString("firstName"), rs.getString("lastName"), rs.getString("address"), rs.getString("zipCode"),
+                        rs.getString("city"), rs.getString("telephone"), rs.getString("email"), rs.getString("creditCardNumber"),
+                        rs.getString("password"));
+                return existingUser;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public static ObservableList<Location> getLocationList() {
         ObservableList<Location> locationList = FXCollections.observableArrayList();
         try {
@@ -112,6 +136,7 @@ public class DBUtils {
             while (rs.next()) {
                 Location location = getLocationFromId(rs.getInt("locationFk"));
                 Category category = getCategoryFromId(rs.getInt("categoryFk"));
+                User user = getUserFromId(rs.getInt("userFk"));
                 car = new Car(
                         rs.getInt("carId"),
                         rs.getString("description"),
@@ -120,7 +145,8 @@ public class DBUtils {
                         category,
                         rs.getBoolean("isRented"),
                         rs.getDate("pickUpDate"),
-                        rs.getDate("dropOffDate")
+                        rs.getDate("dropOffDate"),
+                        user
                 );
                 carList.add(car);
             }
@@ -183,6 +209,7 @@ public class DBUtils {
             while (rs.next()) {
                 Location location = getLocationFromId(rs.getInt("locationFk"));
                 Category category = getCategoryFromId(rs.getInt("categoryFk"));
+                User user = getUserFromId(rs.getInt("userFk"));
                 car = new Car(
                         rs.getInt("carId"),
                         rs.getString("description"),
@@ -191,7 +218,8 @@ public class DBUtils {
                         category,
                         rs.getBoolean("isRented"),
                         rs.getDate("pickUpDate"),
-                        rs.getDate("dropOffDate")
+                        rs.getDate("dropOffDate"),
+                        user
                 );
                 popularCars.add(car);
             }

@@ -97,4 +97,8 @@ public class Car {
     public void setDropOffDate(Date dropOffDate) {
         this.dropOffDate = dropOffDate;
     }
+
+    public String toString(Car c, Object o) {
+        return c.description + " " + c.getCategoryFk().getCategoryPrize();
+    }
 }

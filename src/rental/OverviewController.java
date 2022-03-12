@@ -9,7 +9,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -43,6 +45,7 @@ public class OverviewController implements Initializable {
     public Label lblPrevious4;
     public Label lblPopular1;
     public Label lblPopular2;
+    public StackPane futurePane;
 
     public void setLoggedInUser(User loggedInUser) {
         this.loggedInUser = loggedInUser;
@@ -123,13 +126,23 @@ public class OverviewController implements Initializable {
 
     private void showFutureReservations() {
         // show future reservations
-        ObservableList<Car> futureReservations = DBUtils.getCarList().stream()
+        ObservableList<String> futureReservations = DBUtils.getCarList().stream()
                 .filter(c -> c.isRented())
                 .filter(c -> c.getPickUpDate().after(new Date()))
+                .map(c -> c.toString(c, null))
                 .collect(Collectors.toCollection(FXCollections::observableArrayList));
 
-        Label[] reservationLabels = { lblPlaceholder1, lblPlaceholder2, lblPlaceholder3, lblPlaceholder4 };
-        setEntriesForList(futureReservations, reservationLabels, 4);
+        ListView<String> lvFuture = new ListView<>(futureReservations);
+        lvFuture.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+            @Override
+            public ListCell<String> call(ListView<String> stringListView) {
+                return new XCell(stringListView);
+            }
+        });
+        futurePane.getChildren().add(lvFuture);
+
+        // Label[] reservationLabels = { lblPlaceholder1, lblPlaceholder2, lblPlaceholder3, lblPlaceholder4 };
+        // setEntriesForList(futureReservations, reservationLabels, 4);
     }
 
     public void rentCar() {
